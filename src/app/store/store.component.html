@@ -1,0 +1,47 @@
+<div class="navbar navbar-light" style="background-color: #7fd9d5;">
+  <a class="navbar-brand">SPORTS STORE</a>
+</div>
+<div class="row">
+  <div class="col-sm-3 bg-light border-left" style="left: 15px">
+    <br>
+    <button type="button" class="btn btn-block btn-outline-primary" (click)="changeCategory()">Home</button>
+    <button *ngFor="let category of categories" type="button"
+            class="btn btn-block btn-outline-primary"
+            (click)="changeCategory(category)" [class.active]="category == selectedCategory">
+      {{category}}
+    </button>
+  </div>
+
+  <div class="col-sm-9 bg-light">
+
+    <div *ngFor="let product of products" class="card text-dark bg-light">
+      <div class="card-header">
+        <h4>
+          {{product.name}}
+          <span class="fa-pull-right">{{product.price | currency:"USD"}}</span>
+        </h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{product.description}}</p>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="form-inline fa-pull-left">
+      <select class="form-select mb-3" [value]="productsPerPage" (change)="changePageSize($event.target.value)">
+        <option value="3">3 per Page</option>
+        <option value="4">4 per Page</option>
+        <option value="6">6 per Page</option>
+        <option value="8">8 per Page</option>
+      </select>
+    </div>
+
+    <div class="btn-group fa-pull-right mb-3" style="right: 20px;">
+      <button *ngFor="let page of getPageNumbers()" (click)="changePage(page)" [class.active]="page == selectedPage"
+              type="button" class="btn btn-outline-primary">
+        {{page}}
+      </button>
+    </div>
+  </div>
+</div>
