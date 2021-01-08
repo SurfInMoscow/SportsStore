@@ -38,7 +38,7 @@ export class StoreComponent {
     this.changePage(1);
   }
 
-  getPageNumbers(): number[] {
+  /*getPageNumbers(): number[] {
     const nums = Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage);
     const arr: number[] = [];
 
@@ -47,5 +47,9 @@ export class StoreComponent {
     }
 
     return arr;
+  }*/
+
+  pageCount(): number {
+    return Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage);
   }
 }
