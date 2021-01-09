@@ -1,0 +1,14 @@
+<div class="fa-pull-right">
+  <small>
+    Your cart:
+    <span *ngIf="cart.itemCount > 0">
+      {{cart.itemCount}} item(s) {{cart.cartPrice | currency:"USD"}}
+    </span>
+    <span *ngIf="cart.itemCount == 0">
+      (empty)
+    </span>
+  </small>
+  <button class="btn btn-sm">
+    <i class="fas fa-shopping-cart"></i>
+  </button>
+</div>

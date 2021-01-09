@@ -1,5 +1,6 @@
 <div class="navbar navbar-light" style="background-color: #7fd9d5;">
   <a class="navbar-brand">SPORTS STORE</a>
+  <cart-summary></cart-summary>
 </div>
 <div class="row">
   <div class="col-sm-3 bg-light border-left" style="left: 15px">
@@ -23,6 +24,7 @@
       </div>
       <div class="card-body">
         <p class="card-text">{{product.description}}</p>
+        <button class="btn-sm btn-info btn-sm fa-pull-right" (click)="addProductToCart(product)">Add to Cart</button>
       </div>
     </div>
 
