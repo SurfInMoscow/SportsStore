@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan("ru.voroby.storebackend.model")
-@EnableJpaRepositories(basePackages = {"ru.voroby.storebackend.repository"})
+@EnableJpaRepositories({"ru.voroby.storebackend.repository"})
 public class StoreBackendApplication {
 
   public static void main(String[] args) {

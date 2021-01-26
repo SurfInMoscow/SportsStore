@@ -25,5 +25,4 @@ public class Order extends AbstractEntity {
   private String country;
 
   private Boolean shipped;
-
 }
