@@ -2,10 +2,11 @@ package ru.voroby.storebackend.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.voroby.storebackend.model.Product;
+import ru.voroby.storebackend.dto.ProductDTO;
 import ru.voroby.storebackend.repository.ProductDAO;
 
 import java.util.List;
@@ -24,13 +25,15 @@ public class ProductController {
     this.productDAO = productDAO;
   }
 
+  @Transactional(readOnly = true)
   @GetMapping
-  public ResponseEntity<List<Product>> getAllProducts() {
+  public ResponseEntity<List<ProductDTO>> getAllProducts() {
+    final var products = StreamSupport
+      .stream(productDAO.findAll().spliterator(), false)
+      .collect(Collectors.toList());
     HttpHeaders headers = new HttpHeaders();
     headers.add("Access-Control-Allow-Origin", "*");
 
-    return ResponseEntity.ok().headers(headers).body(StreamSupport
-      .stream(productDAO.findAll().spliterator(), false)
-      .collect(Collectors.toList()));
+    return ResponseEntity.ok().headers(headers).body(products.stream().map(ProductDTO::of).collect(Collectors.toList()));
   }
 }
