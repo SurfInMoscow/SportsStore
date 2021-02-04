@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.voroby.storebackend.model.Order;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,20 +15,27 @@ public class OrderDTO {
 
   private Integer id;
 
+  @NotBlank
   private String name;
 
+  @NotBlank
   private String address;
 
+  @NotBlank
   private String city;
 
+  @NotBlank
   private String state;
 
+  @NotBlank
   private String zip;
 
+  @NotBlank
   private String country;
 
   private Boolean shipped;
 
+  @NotNull
   private CartDTO cart;
 
   public Order toOrder() {
