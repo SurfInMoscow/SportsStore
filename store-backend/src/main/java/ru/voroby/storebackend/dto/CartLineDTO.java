@@ -17,7 +17,7 @@ public class CartLineDTO {
   private ProductDTO product;
 
   public CartLine toCartLine() {
-    return new CartLine(quantity, null, null);
+    return new CartLine(quantity, product.toProduct(), null);
   }
 
 }

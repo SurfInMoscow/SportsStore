@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres:13.1-alpine
+    environment:
+      POSTGRES_DB: pgDatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    volumes:
+      - data01:/var/lib/postgresql/data
+
+volumes:
+  data01:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/vorobyev-ps/Documents/postgresql/pgdata'

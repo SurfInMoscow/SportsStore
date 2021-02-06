@@ -7,7 +7,7 @@ import {RouterModule} from '@angular/router';
 
 const routing = RouterModule.forChild([
   {path: 'auth', component: AuthComponent},
-  {path: 'admin', component: AdminComponent},
+  {path: 'main', component: AdminComponent},
   {path: '**', redirectTo: 'auth'}
 ]);
 
