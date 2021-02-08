@@ -2,12 +2,14 @@ package ru.voroby.storebackend.config;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.voroby.storebackend.dto.TokenDTO;
 import ru.voroby.storebackend.dto.UserDTO;
 
 import javax.servlet.FilterChain;
@@ -27,6 +29,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
   private AuthenticationManager authenticationManager;
 
+  private final ObjectMapper mapper = new ObjectMapper();
+
   public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
@@ -34,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   @Override
   public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
     try {
-      var userDTO = new ObjectMapper().readValue(req.getInputStream(), UserDTO.class);
+      var userDTO = mapper.readValue(req.getInputStream(), UserDTO.class);
 
       return authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -42,6 +46,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
           userDTO.getPassword(),
           new ArrayList<>())
       );
+    } catch (AuthenticationException ae) {
+      try {
+        res.setStatus(HttpStatus.FORBIDDEN.value());
+        res.getWriter().write(mapper.writeValueAsString(TokenDTO.builder().success(false).build()));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -49,14 +60,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     return null;
   }
 
+
+
   @Override
   protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
-                                          FilterChain chain, Authentication authResult) {
+                                          FilterChain chain, Authentication authResult) throws IOException {
     String token = JWT.create()
       .withSubject(((User) authResult.getPrincipal()).getUsername())
       .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
       .sign(HMAC512(SECRET.getBytes()));
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+    res.getWriter().write(mapper.writeValueAsString(
+      TokenDTO.builder()
+        .success(true)
+        .token(token).build()));
   }
 
 
