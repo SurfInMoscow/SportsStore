@@ -3,7 +3,6 @@ package ru.voroby.storebackend.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ru.voroby.storebackend.BootTest;
 import ru.voroby.storebackend.model.Cart;
 import ru.voroby.storebackend.model.CartLine;
 import ru.voroby.storebackend.model.Order;
@@ -13,7 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Transactional
-class OrderDAOTest extends BootTest {
+class OrderDAOTest extends AbstractJpaTest {
 
   @Autowired
   private OrderDAO orderDAO;
