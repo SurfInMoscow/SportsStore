@@ -16,6 +16,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -65,15 +68,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   @Override
   protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
                                           FilterChain chain, Authentication authResult) throws IOException {
+    final var instant = Instant.now().plusMillis(EXPIRATION_TIME);
     String token = JWT.create()
       .withSubject(((User) authResult.getPrincipal()).getUsername())
-      .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+      .withExpiresAt(Date.from(instant))
       .sign(HMAC512(SECRET.getBytes()));
     res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     res.getWriter().write(mapper.writeValueAsString(
       TokenDTO.builder()
         .success(true)
-        .token(token).build()));
+        .token(token)
+        .expires(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()))
+        .build()));
   }
 
 
