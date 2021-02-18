@@ -65,4 +65,9 @@ class OrderDAOTest extends AbstractJpaTest {
 
     assertEquals(1, cartLines.size());
   }
+
+  @Test
+  public void update() {
+
+  }
 }

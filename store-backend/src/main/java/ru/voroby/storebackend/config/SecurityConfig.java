@@ -2,6 +2,7 @@ package ru.voroby.storebackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     final var authenticationFilter = new JWTAuthenticationFilter(authenticationManager());
     authenticationFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/authentication/login", "POST"));
     http.cors().and().csrf().disable().authorizeRequests()
-      .antMatchers("/products").permitAll()
+      .antMatchers(HttpMethod.GET, "/products").permitAll()
+      .antMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+      .antMatchers(HttpMethod.PUT, "/products").hasRole("ADMIN")
+      .antMatchers(HttpMethod.DELETE, "/products").hasRole("ADMIN")
+      .antMatchers(HttpMethod.POST, "/orders").permitAll()
+      .antMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN")
+      .antMatchers(HttpMethod.PUT, "/orders").hasRole("ADMIN")
+      .antMatchers(HttpMethod.DELETE, "/orders").hasRole("ADMIN")
       .anyRequest().authenticated()
       .and()
       .addFilter(authenticationFilter)

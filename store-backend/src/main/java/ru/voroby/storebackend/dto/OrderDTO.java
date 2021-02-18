@@ -46,4 +46,10 @@ public class OrderDTO {
     return order;
   }
 
+  public static OrderDTO of(Order order) {
+    return new OrderDTO(order.getId(), order.getName(), order.getAddress(),
+      order.getCity(), order.getState(), order.getZip(), order.getCountry(),
+      order.getShipped(), CartDTO.of(order.getCart()));
+  }
+
 }

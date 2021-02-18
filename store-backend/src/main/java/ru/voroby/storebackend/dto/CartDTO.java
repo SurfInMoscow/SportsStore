@@ -24,4 +24,12 @@ public class CartDTO {
     return new Cart(cartLines, itemCount, cartPrice);
   }
 
+  public static CartDTO of(Cart cart) {
+    return new CartDTO(cart.getCartLines().stream()
+      .map(CartLineDTO::of)
+      .collect(Collectors.toSet()),
+      cart.getItemCount(),
+      cart.getCartPrice());
+  }
+
 }

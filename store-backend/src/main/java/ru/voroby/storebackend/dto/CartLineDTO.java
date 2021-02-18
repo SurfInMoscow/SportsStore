@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.voroby.storebackend.model.CartLine;
 
-import java.util.Optional;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +16,10 @@ public class CartLineDTO {
 
   public CartLine toCartLine() {
     return new CartLine(quantity, product.toProduct(), null);
+  }
+
+  public static CartLineDTO of(CartLine cartLine) {
+    return new CartLineDTO(cartLine.getId(), ProductDTO.of(cartLine.getProduct()));
   }
 
 }
