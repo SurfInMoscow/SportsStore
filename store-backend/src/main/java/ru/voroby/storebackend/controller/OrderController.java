@@ -59,7 +59,7 @@ public class OrderController {
   //TODO тесты
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable Integer id) {
     orderDAO.deleteById(id);
   }
 

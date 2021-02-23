@@ -2,16 +2,16 @@ package ru.voroby.storebackend.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import ru.voroby.storebackend.model.Cart;
 import ru.voroby.storebackend.model.CartLine;
 import ru.voroby.storebackend.model.Order;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Transactional
 class OrderDAOTest extends AbstractJpaTest {
 
   @Autowired
@@ -68,6 +68,26 @@ class OrderDAOTest extends AbstractJpaTest {
 
   @Test
   public void update() {
+    final var order = orderDAO.findAllByName("TestOrder").findFirst().get();
+    var cartLine = Stream.of(order)
+      .map(Order::getCart)
+      .map(Cart::getCartLines)
+      .findFirst().get().iterator().next();
+    cartLine.setQuantity(2);
+    orderDAO.save(order);
+    var updated = orderDAO.findAllByName("TestOrder").findFirst().get();
+    var updatedCartLine = Stream.of(updated)
+      .map(Order::getCart)
+      .map(Cart::getCartLines)
+      .findFirst().get().iterator().next();
 
+    assertEquals(cartLine.getQuantity(), updatedCartLine.getQuantity());
+  }
+
+  @Test
+  public void delete() {
+    orderDAO.deleteById(12);
+    Optional<Order> byId = orderDAO.findById(12);
+    assertTrue(byId.isEmpty());
   }
 }
