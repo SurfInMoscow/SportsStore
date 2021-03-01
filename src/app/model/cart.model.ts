@@ -4,8 +4,8 @@ import {Product} from './product.model';
 @Injectable()
 export class Cart {
   public lines: CartLine[] = [];
-  public itemCount = 0;
-  public cartPrice = 0;
+  public itemCount: number;
+  public cartPrice: number;
 
   addLine(product: Product, quantity: number = 1) {
     const line = this.lines.find(cl => cl.product.id === product.id);
@@ -41,8 +41,8 @@ export class Cart {
     this.cartPrice = 0;
     this.itemCount = 0;
     this.lines.forEach(cl => {
-      this.itemCount += cl.quantity;
-      this.cartPrice += (cl.product.price * cl.quantity);
+      this.itemCount += Number(cl.quantity);
+      this.cartPrice += Number(cl.product.price * cl.quantity);
     });
   }
 }

@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     authenticationFilter.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/authentication/login", "POST"));
     http.cors().and().csrf().disable().authorizeRequests()
       .antMatchers(HttpMethod.GET, "/products").permitAll()
+      .antMatchers(HttpMethod.POST, "/orders").permitAll()
       .antMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
       .antMatchers(HttpMethod.PUT, "/products").hasRole("ADMIN")
       .antMatchers(HttpMethod.DELETE, "/products").hasRole("ADMIN")
-      .antMatchers(HttpMethod.POST, "/orders").permitAll()
       .antMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN")
       .antMatchers(HttpMethod.PUT, "/orders").hasRole("ADMIN")
       .antMatchers(HttpMethod.DELETE, "/orders").hasRole("ADMIN")
@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   CorsConfigurationSource corsConfigurationSource() {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/authentication/login", new CorsConfiguration().applyPermitDefaultValues());
+    source.registerCorsConfiguration("/orders", new CorsConfiguration().applyPermitDefaultValues());
+    source.registerCorsConfiguration("/products", new CorsConfiguration().applyPermitDefaultValues());
 
     return source;
   }

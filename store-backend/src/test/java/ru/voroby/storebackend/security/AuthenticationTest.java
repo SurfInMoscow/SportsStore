@@ -3,34 +3,17 @@ package ru.voroby.storebackend.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import ru.voroby.storebackend.AbstractMvcTest;
 import ru.voroby.storebackend.dto.TokenDTO;
 import ru.voroby.storebackend.dto.UserDTO;
-import ru.voroby.storebackend.repository.OrderDAO;
-import ru.voroby.storebackend.repository.ProductDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest
-public class AuthenticationTest {
-
-  @Autowired
-  private MockMvc mvc;
-
-  @MockBean
-  private OrderDAO orderDAO;
-
-  @MockBean
-  private ProductDAO productDAO;
-
-  @Autowired
-  private ObjectMapper mapper;
+public class AuthenticationTest extends AbstractMvcTest {
 
   private final String username = "admin";
 

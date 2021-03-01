@@ -1,8 +1,8 @@
 package ru.voroby.storebackend.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.voroby.storebackend.dto.OrderDTO;
 import ru.voroby.storebackend.model.Cart;
@@ -14,19 +14,18 @@ import ru.voroby.storebackend.repository.ProductDAO;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@CrossOrigin
 @RestController
+@Transactional(readOnly = true)
 @RequestMapping(value = "/orders", produces = APPLICATION_JSON_VALUE)
-public class OrderController {
+public class OrderController extends BaseController {
 
   private OrderDAO orderDAO;
 
@@ -37,46 +36,42 @@ public class OrderController {
     this.productDAO = productDAO;
   }
 
+  @Transactional
   @PostMapping(consumes = APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.ACCEPTED)
-  public void save(@RequestBody @Valid OrderDTO orderDto) {
+  public ResponseEntity<?> save(@RequestBody @Valid OrderDTO orderDto) {
     orderDAO.save(dtoToJpaEntity(orderDto));
+    return ResponseEntity.accepted().build();
   }
 
   @GetMapping(produces = APPLICATION_JSON_VALUE)
-  public List<OrderDTO> getAll() {
-    return StreamSupport.stream(orderDAO.findAll().spliterator(), false)
+  public ResponseEntity<List<OrderDTO>> getAll() {
+    return ResponseEntity.ok()
+      .body(StreamSupport.stream(orderDAO.findAll().spliterator(), false)
       .map(OrderDTO::of)
-      .collect(Collectors.toList());
+      .collect(Collectors.toList()));
   }
 
-  //TODO тесты
+  @Transactional
   @PutMapping(consumes = APPLICATION_JSON_VALUE)
-  public OrderDTO update(@RequestBody @Valid OrderDTO orderDTO) {
-    return OrderDTO.of(orderDAO.save(dtoToJpaEntity(orderDTO)));
+  public ResponseEntity<OrderDTO> update(@RequestBody @Valid OrderDTO orderDto) {
+    return ResponseEntity.ok()
+      .body(OrderDTO.of(orderDAO.save(dtoToJpaEntity(orderDto))));
   }
 
-  //TODO тесты
+  @Transactional
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public void delete(@PathVariable Integer id) {
-    orderDAO.deleteById(id);
+  public ResponseEntity<OrderDTO> delete(@PathVariable Integer id) {
+    Optional<Order> byId = orderDAO.findById(id);
+
+    return byId.map(order -> {
+      orderDAO.deleteById(id);
+      return ResponseEntity.ok()
+        .body(OrderDTO.of(order));
+    }).orElseGet(() -> ResponseEntity.notFound().build());
   }
 
-  @ExceptionHandler
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Map<String, String> exceptionHandle(MethodArgumentNotValidException ex) {
-    Map<String, String> map = new HashMap<>();
-    ex.getBindingResult().getAllErrors().forEach((error) -> {
-      String fieldName = ((FieldError) error).getField();
-      String defaultMessage = error.getDefaultMessage();
-      map.put(fieldName, defaultMessage);
-    });
-
-    return map;
-  }
-
-  private Order dtoToJpaEntity(OrderDTO dto) {
+  protected Order dtoToJpaEntity(OrderDTO dto) {
     Order order = dto.toOrder();
     Cart cart = order.getCart();
     List<CartLine> cartLines = new ArrayList<>(cart.getCartLines());
