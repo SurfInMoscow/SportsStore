@@ -1,4 +1,15 @@
 <div class="navbar navbar-light" style="background-color: #7fd9d5;">
-  <a class="navbar-brand" routerLink="/store">SPORTS STORE</a>
+  <a class="navbar-brand">SPORTS STORE</a>
 </div>
-<h3>Admin component stub.</h3>
+
+<div class="row">
+  <div class="col-sm-2 bg-light border-left" style="left: 15px">
+    <br>
+    <button type="button" class="btn btn-block btn-outline-primary">Product</button>
+    <button type="button" class="btn btn-block btn-outline-primary">Orders</button>
+    <button type="button" class="btn btn-block btn-danger">Logout</button>
+  </div>
+  <div class="col-sm-1">
+    <router-outlet></router-outlet>
+  </div>
+</div>
