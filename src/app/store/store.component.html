@@ -3,7 +3,7 @@
   <cart-summary></cart-summary>
 </div>
 <div class="row">
-  <div class="col-sm-3 bg-light border-left" style="left: 15px">
+  <div class="col-sm-3 bg-light border-left container" style="left: 15px">
     <br>
     <button type="button" class="btn btn-block btn-outline-primary" (click)="changeCategory()">Home</button>
     <button *ngFor="let category of categories" type="button"
@@ -14,7 +14,7 @@
     <button type="button" class="btn btn-block btn-danger" routerLink="/admin">Admin</button>
   </div>
 
-  <div class="col-sm-9 bg-light">
+  <div class="col-sm-9 bg-light container">
 
     <div *ngFor="let product of products" class="card text-dark bg-light">
       <div class="card-header">

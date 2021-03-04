@@ -1,4 +1,34 @@
-<div class="navbar navbar-light" style="background-color: #7fd9d5;">
-  <a class="navbar-brand" routerLink="/store">SPORTS STORE</a>
+<div class="container">
+  <div class="mx-auto">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of getProducts()" style="align-content: center">
+        <td class="text-nowrap">{{p.id}}</td>
+        <td class="text-nowrap">{{p.name}}</td>
+        <td class="text-nowrap">{{p.category}}</td>
+        <td class="text-nowrap">{{p.description}}</td>
+        <td class="text-nowrap">{{p.price | currency:"USD"}}</td>
+        <td>
+          <button class="btn btn-secondary"
+                  [routerLink]="['/admin/main/products/edit', p.id]">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-danger"
+                  (click)="deleteProduct(p.id)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<h3>ProductTable component stub.</h3>

@@ -7,7 +7,8 @@ import {Router} from '@angular/router';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'store',
-  templateUrl: 'store.component.html'
+  templateUrl: 'store.component.html',
+  styleUrls: ['store.css']
 })
 export class StoreComponent {
   public selectedCategory: string = null;
