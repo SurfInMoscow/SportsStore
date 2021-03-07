@@ -51,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       );
     } catch (AuthenticationException ae) {
       try {
-        res.setStatus(HttpStatus.FORBIDDEN.value());
+        res.setStatus(HttpStatus.OK.value());
         res.getWriter().write(mapper.writeValueAsString(TokenDTO.builder().success(false).build()));
       } catch (IOException e) {
         e.printStackTrace();

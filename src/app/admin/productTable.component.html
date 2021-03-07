@@ -1,5 +1,10 @@
-<div class="container">
-  <div class="mx-auto">
+<div class="row row-cols-1">
+  <div class="col" style="top: 10px">
+    <button class="btn btn-info text-nowrap"
+            [routerLink]="['/admin/main/products/create']">Create New Product</button>
+    <br>
+  </div>
+  <div class="col" style="top: 20px">
     <table class="table">
       <thead>
       <tr>
@@ -20,11 +25,11 @@
         <td class="text-nowrap">{{p.description}}</td>
         <td class="text-nowrap">{{p.price | currency:"USD"}}</td>
         <td>
-          <button class="btn btn-secondary"
+          <button class="btn btn-secondary btn-sm"
                   [routerLink]="['/admin/main/products/edit', p.id]">Edit</button>
         </td>
         <td>
-          <button class="btn btn-danger"
+          <button class="btn btn-danger btn-sm"
                   (click)="deleteProduct(p.id)">Delete</button>
         </td>
       </tr>
