@@ -19,7 +19,7 @@ public class CartLineDTO {
   }
 
   public static CartLineDTO of(CartLine cartLine) {
-    return new CartLineDTO(cartLine.getId(), ProductDTO.of(cartLine.getProduct()));
+    return new CartLineDTO(cartLine.getQuantity(), ProductDTO.of(cartLine.getProduct()));
   }
 
 }

@@ -55,7 +55,7 @@ public class OrderController extends BaseController {
   @PutMapping(consumes = APPLICATION_JSON_VALUE)
   public ResponseEntity<OrderDTO> update(@RequestBody @Valid OrderDTO orderDto) {
     return ResponseEntity.ok()
-      .body(OrderDTO.of(orderDAO.save(dtoToJpaEntity(orderDto))));
+      .body(OrderDTO.of(orderDAO.saveAndFlush(dtoToJpaEntity(orderDto))));
   }
 
   @Transactional
