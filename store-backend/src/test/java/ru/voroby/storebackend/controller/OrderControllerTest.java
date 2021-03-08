@@ -30,10 +30,10 @@ public class OrderControllerTest extends AbstractMvcTest {
 
   @BeforeAll
   static void before() {
-    ProductDTO productDTO = new ProductDTO(1, "name", "sport", "super", 50.0);
+    ProductDTO productDTO = new ProductDTO(1, 1L, "name", "sport", "super", 50.0);
     CartLineDTO cartLineDTO = new CartLineDTO(3, productDTO);
     CartDTO cartDTO = new CartDTO(Set.of(cartLineDTO), 3, 150.0);
-    orderDTO = new OrderDTO(1, "name", "address", "moscow", "mo", "12345", "russia", true, cartDTO);
+    orderDTO = new OrderDTO(1, 1L, "name", "address", "moscow", "mo", "12345", "russia", true, cartDTO);
   }
 
   @Test

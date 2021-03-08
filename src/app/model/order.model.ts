@@ -4,6 +4,7 @@ import {Cart} from './cart.model';
 @Injectable()
 export class Order {
   id: number;
+  version: number;
   name: string;
   address: string;
   city: string;
@@ -17,6 +18,7 @@ export class Order {
 
   clear() {
     this.id = null;
+    this.version = null;
     this.name = this.address = this.city = null;
     this.state = this.zip = this.country = null;
     this.shipped = false;

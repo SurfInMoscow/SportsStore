@@ -31,8 +31,8 @@ class ProductControllerTest extends AbstractMvcTest {
   @BeforeAll
   public static void init() {
     products = new ArrayList<>();
-    products.add(new ProductDTO(1, "name", "sport", "super", 50.0));
-    products.add(new ProductDTO(2, "strap", "hiking", "extreme", 20.0));
+    products.add(new ProductDTO(1, 1L, "name", "sport", "super", 50.0));
+    products.add(new ProductDTO(2, 1L, "strap", "hiking", "extreme", 20.0));
   }
 
   @Test
@@ -48,7 +48,7 @@ class ProductControllerTest extends AbstractMvcTest {
   @Test
   @WithMockUser(value = "admin", roles = {"ADMIN"})
   void save() throws Exception {
-    ProductDTO productDTO = new ProductDTO(null, "water glasses", "swimming", "uniform", 40.0);
+    ProductDTO productDTO = new ProductDTO(null, 0L, "water glasses", "swimming", "uniform", 40.0);
     when(productController.save(productDTO)).thenReturn(ResponseEntity.accepted().body(withId(productDTO)));
 
     MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(URI_PATH)

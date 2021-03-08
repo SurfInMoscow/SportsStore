@@ -40,14 +40,14 @@ public class ProductController extends BaseController {
   @PostMapping(consumes = APPLICATION_JSON_VALUE)
   public ResponseEntity<ProductDTO> save(@RequestBody @Valid ProductDTO productDTO) {
     return ResponseEntity.accepted()
-      .body(ProductDTO.of(productDAO.save(productDTO.toProduct())));
+      .body(ProductDTO.of(productDAO.saveAndFlush(productDTO.toProduct())));
   }
 
   @Transactional
   @PutMapping(consumes = APPLICATION_JSON_VALUE)
   public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
     return ResponseEntity.accepted()
-      .body(ProductDTO.of(productDAO.save(productDTO.toProduct())));
+      .body(ProductDTO.of(productDAO.saveAndFlush(productDTO.toProduct())));
   }
 
   @Transactional

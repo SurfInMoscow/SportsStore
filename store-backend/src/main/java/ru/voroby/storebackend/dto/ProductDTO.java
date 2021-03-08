@@ -10,6 +10,8 @@ public class ProductDTO {
 
   private Integer id;
 
+  private Long version;
+
   private String name;
 
   private String category;
@@ -20,6 +22,7 @@ public class ProductDTO {
 
   public static ProductDTO of(Product product) {
     return new ProductDTO(product.getId(),
+      product.getVersion(),
       product.getName(),
       product.getCategory() == null ? null : product.getCategory(),
       product.getDescription() == null ? null : product.getDescription(),
@@ -29,6 +32,7 @@ public class ProductDTO {
   public Product toProduct() {
     var product = new Product(name, category, description, price);
     product.setId(id);
+    product.setVersion(version);
 
     return product;
   }

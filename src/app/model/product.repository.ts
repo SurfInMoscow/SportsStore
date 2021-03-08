@@ -16,6 +16,17 @@ export class ProductRepository {
     });
   }
 
+  saveProduct(product: Product) {
+    if (product.id === null || product.id === 0) {
+      this.dataSource.saveProduct(product)
+        .subscribe(res => this.products.push(res));
+    } else {
+      this.dataSource.updateProduct(product)
+        .subscribe(res => this.products
+          .splice(this.products.findIndex(p => p.id === res.id), 1, res));
+    }
+  }
+
   getProducts(category: string = null): Product[] {
     return this.products.filter(p => category == null || p.category === category);
   }

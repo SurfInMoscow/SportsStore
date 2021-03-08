@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -12,11 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
-import static ru.voroby.storebackend.config.SecurityConfig.HEADER_STRING;
-import static ru.voroby.storebackend.config.SecurityConfig.SECRET;
-import static ru.voroby.storebackend.config.SecurityConfig.TOKEN_PREFIX;
+import static ru.voroby.storebackend.config.SecurityConfig.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -49,7 +48,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         .getSubject();
 
       if (user != null) {
-        return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        return new UsernamePasswordAuthenticationToken(user, null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
       }
 
       return null;

@@ -15,6 +15,8 @@ public class OrderDTO {
 
   private Integer id;
 
+  private Long version;
+
   @NotBlank
   private String name;
 
@@ -42,13 +44,16 @@ public class OrderDTO {
     var cart = this.cart.toCart();
     var order = new Order(name, address, city, state, zip, country, shipped, cart);
     order.setId(id);
+    order.setVersion(version);
 
     return order;
   }
 
   public static OrderDTO of(Order order) {
-    return new OrderDTO(order.getId(), order.getName(), order.getAddress(),
-      order.getCity(), order.getState(), order.getZip(), order.getCountry(),
+    return new OrderDTO(order.getId(), order.getVersion(),
+      order.getName(), order.getAddress(),
+      order.getCity(), order.getState(),
+      order.getZip(), order.getCountry(),
       order.getShipped(), CartDTO.of(order.getCart()));
   }
 
