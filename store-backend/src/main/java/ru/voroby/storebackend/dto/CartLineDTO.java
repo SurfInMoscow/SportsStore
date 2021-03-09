@@ -10,16 +10,25 @@ import ru.voroby.storebackend.model.CartLine;
 @NoArgsConstructor
 public class CartLineDTO {
 
+  private Integer id;
+
+  private Long version;
+
   private Integer quantity;
 
   private ProductDTO product;
 
   public CartLine toCartLine() {
-    return new CartLine(quantity, product.toProduct(), null);
+    CartLine cartLine = new CartLine(quantity, product.toProduct(), null);
+    cartLine.setId(id);
+    cartLine.setVersion(version);
+
+    return cartLine;
   }
 
   public static CartLineDTO of(CartLine cartLine) {
-    return new CartLineDTO(cartLine.getQuantity(), ProductDTO.of(cartLine.getProduct()));
+    return new CartLineDTO(cartLine.getId(), cartLine.getVersion(),
+      cartLine.getQuantity(), ProductDTO.of(cartLine.getProduct()));
   }
 
 }

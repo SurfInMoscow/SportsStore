@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CartDTO {
 
+  private Integer id;
+
+  private Long version;
+
   private Set<CartLineDTO> lines;
 
   private Integer itemCount;
@@ -21,13 +25,16 @@ public class CartDTO {
 
   public Cart toCart() {
     var cartLines = lines.stream().map(CartLineDTO::toCartLine).collect(Collectors.toSet());
-    return new Cart(cartLines, itemCount, cartPrice);
+    Cart cart = new Cart(cartLines, itemCount, cartPrice);
+    cart.setId(id);
+    cart.setVersion(version);
+
+    return cart;
   }
 
   public static CartDTO of(Cart cart) {
-    return new CartDTO(cart.getCartLines().stream()
-      .map(CartLineDTO::of)
-      .collect(Collectors.toSet()),
+    return new CartDTO(cart.getId(), cart.getVersion(),
+      cart.getCartLines().stream().map(CartLineDTO::of).collect(Collectors.toSet()),
       cart.getItemCount(),
       cart.getCartPrice());
   }
