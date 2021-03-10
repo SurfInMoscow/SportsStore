@@ -19,7 +19,7 @@
           <td class="text-nowrap">{{o.name}}</td><td class="text-nowrap">{{o.zip}}</td>
           <th>Product</th><th>Quantity</th>
           <td class="text-nowrap">
-            <button class="btn btn-warning" (click)="markShipped(o)">Ship</button>
+            <button class="btn btn-warning" (click)="markShipped(o)" [disabled]="o.shipped">Ship</button>
             <button class="btn btn-danger ml-3" (click)="delete(o.id)">Delete</button>
           </td>
         </tr>

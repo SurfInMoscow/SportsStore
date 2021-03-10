@@ -3,6 +3,8 @@ import {Product} from './product.model';
 
 @Injectable()
 export class Cart {
+  public id?: number;
+  public version?: number;
   public lines: CartLine[] = [];
   public itemCount: number;
   public cartPrice: number;
@@ -12,7 +14,7 @@ export class Cart {
     if (line !== undefined) {
       line.quantity += quantity;
     } else {
-      this.lines.push(new CartLine(product, quantity));
+      this.lines.push(new CartLine(null, null, product, quantity));
     }
     this.recalculate();
   }
@@ -48,7 +50,9 @@ export class Cart {
 }
 
 class CartLine {
-  constructor(public product: Product,
+  constructor(public id: number,
+              public version: number,
+              public product: Product,
               public quantity: number) {
   }
 
