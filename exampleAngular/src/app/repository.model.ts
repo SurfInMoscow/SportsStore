@@ -4,7 +4,6 @@ import {Product} from './product.model';
 export class RepositoryModel {
   private readonly datasource: SimpleDatasource;
   private readonly products: Product[];
-  private locator = (p: Product, id: number) => p.id === id;
 
   constructor() {
     this.datasource = new SimpleDatasource();
@@ -19,7 +18,7 @@ export class RepositoryModel {
 
   getProduct(id: number): Product {
     // @ts-ignore
-    return this.products.find(p => this.locator(p.id, id));
+    return this.products.find(p => p.id === id);
   }
 
   // tslint:disable-next-line:typedef
@@ -33,7 +32,7 @@ export class RepositoryModel {
   }
 
   deleteProduct(id: number) {
-    const index = this.products.findIndex(p => this.locator(p, id));
+    const index = this.products.findIndex(p => p.id === id);
     if (index > -1) {
       this.products.splice(index, 1);
     }

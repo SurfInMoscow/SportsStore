@@ -1,1 +1,25 @@
-<div class="bg-success"><p>There are {{model.getProducts().length}} in repository.</p></div>
+<div class="form-group">
+  <label>Name:</label>
+  <input class="form-control" [value]="model.getProduct(1)?.name || 'None.'"/>
+</div>
+<div class="text-left" [ngClass]="getClass(1)" [textContent]="'Description: ' + (model.getProduct(1)?.description || 'No description.')"></div>
+<div [ngClass]="getClassMap(1)">ClassMap</div>
+<div [class.bg-info]="model">There are {{getProductCount()}} products.</div>
+
+<div *ngFor="let p of getProducts()">
+  <span *ngIf="p.name == targetName" [class.bg-info]="model">{{targetName}}</span>
+  <div [ngSwitch]="p.name">
+    <span *ngSwitchCase="targetName">It's already drawn above!</span>
+    <span *ngSwitchDefault>Default value!</span>
+  </div>
+</div>
+
+<div>
+  <span [class.bg-info]="model">Counter: {{counter}}</span>
+</div>
+
+<template #titleTemplate>
+  <h4 class="p-a-1 bg-success">Repeated Content</h4>
+</template>
+
+<template [ngTemplateOutlet]="titleTemplate"></template>

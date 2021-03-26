@@ -8,8 +8,8 @@ export class SimpleDatasource {
       new Product('Socks', 'Clothes', 3.00, 1, undefined, 'Warm socks'),
       new Product('T-Short', 'Clothes', 15.00, 2, undefined, 'Hawaii'),
       new Product('Ball', 'Sport', 20.00, 3, undefined, 'Soccer ball'),
-      new Product('Chess', 'Sport', 50.00, 1, undefined, 'For clever'),
-      new Product('Glasses', 'Watersport', 30.00, 1, undefined, 'For champions')
+      new Product('Chess', 'Sport', 50.00, 4, undefined, 'For clever'),
+      new Product('Glasses', 'Watersport', 30.00, 5, undefined, 'For champions')
     );
   }
 
