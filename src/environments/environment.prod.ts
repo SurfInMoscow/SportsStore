@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  HOSTNAME: 'voroby.herokuapp.com',
+  PROTOCOL: 'https'
 };

@@ -4,10 +4,10 @@ import {Observable} from 'rxjs';
 import {Product} from './product.model';
 import {Order} from './order.model';
 import {map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
-const HOSTNAME = 'localhost';
-const PORT = 8080;
-const PROTOCOL = 'http';
+const HOSTNAME = environment.HOSTNAME;
+const PROTOCOL = environment.PROTOCOL;
 
 @Injectable()
 export class RestDataSource {
@@ -15,7 +15,7 @@ export class RestDataSource {
   authToken: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = `${PROTOCOL}://${HOSTNAME}:${PORT}/`;
+    this.baseUrl = `${PROTOCOL}://${HOSTNAME}/`;
   }
 
   getProducts(): Observable<Product[]> {
