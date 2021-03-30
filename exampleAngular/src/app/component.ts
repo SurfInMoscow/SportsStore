@@ -10,9 +10,23 @@ export class ProductComponent {
   model: RepositoryModel = new RepositoryModel();
   targetName = 'Chess';
   counter = 1;
+  selectedProduct: string;
+  newProduct: Product = new Product('', '', 0);
 
   constructor() {
     this.onInit();
+  }
+
+  get jsonProduct() {
+    return JSON.stringify(this.newProduct);
+  }
+
+  addProduct(product: Product) {
+    console.log(this.newProduct);
+  }
+
+  getSelected(product: Product): boolean {
+    return product.name === this.selectedProduct;
   }
 
   getClass(key: number): string {
