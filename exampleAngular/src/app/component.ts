@@ -22,7 +22,7 @@ export class ProductComponent {
   }
 
   addProduct(product: Product) {
-    console.log(this.newProduct);
+    this.model.saveProduct(product);
   }
 
   getSelected(product: Product): boolean {

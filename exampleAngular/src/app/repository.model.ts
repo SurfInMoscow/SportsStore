@@ -23,7 +23,7 @@ export class RepositoryModel {
 
   // tslint:disable-next-line:typedef
   saveProduct(product: Product) {
-    if (product.id === 0 || product.id === null) {
+    if (product.id === 0 || product.id === null || product.id === undefined) {
       product.id = this.generateID();
       this.products.push(product);
     } else {

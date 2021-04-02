@@ -1,0 +1,70 @@
+<!--<form #form [formGroup]="productForm" (ngSubmit)="submitForm(form)">
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" formControlName="name"/>
+
+    <div *ngIf="formSubmitted">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="name.errors.required || newProduct.name == ''">
+          Name is required.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Name must be at least 2 characters long.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Category</label>
+    <input class="form-control"
+           formControlName="description"/>
+  </div>
+
+  <div class="form-group">
+    <label>Price</label>
+    <input class="form-control" formControlName="price"/>
+  </div>
+
+  <button class="btn btn-primary" type="submit">
+    Create
+  </button>
+</form>-->
+
+
+<!--<form #form="ngForm" (ngSubmit)="submitForm(form)">
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" #name="ngModel" name="name" [(ngModel)]="newProduct.name"/>
+
+    <div *ngIf="formSubmitted">
+      <div *ngIf="name.invalid"
+           class="alert alert-danger">
+
+        <div *ngIf="name.errors.required || newProduct.name == ''">
+          Name is required.
+        </div>
+        <div *ngIf="name.errors.minlength">
+          Name must be at least 2 characters long.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Category</label>
+    <input class="form-control"
+           #category="ngModel" name="category" [(ngModel)]="newProduct.category"/>
+  </div>
+
+  <div class="form-group">
+    <label>Price</label>
+    <input class="form-control" #price="ngModel" name="price" [(ngModel)]="newProduct.price"/>
+  </div>
+
+  <button class="btn btn-primary" type="submit">
+    Create
+  </button>
+</form>-->

@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {ProductComponent} from './component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ProductTableComponent} from './productTable.component';
+import {ProductFormComponent} from './productForm.component';
+import {RepositoryModel} from './repository.model';
 
 @NgModule({
   // регистрация компонентов, описывет функции для внешнего доступа(других приложений)
   declarations: [
-    AppComponent, ProductComponent
+    ProductComponent, ProductTableComponent, ProductFormComponent
   ],
   // зависимости модуля/приложения
   imports: [
-    BrowserModule, FormsModule
+    BrowserModule, FormsModule, ReactiveFormsModule
   ],
   providers: [],
   // точка входа в приложение
