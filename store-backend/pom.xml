@@ -16,6 +16,7 @@
   <properties>
     <java.version>16</java.version>
     <lombokJdk16.version>1.18.20</lombokJdk16.version>
+    <jpa-streamer-version>1.0.2</jpa-streamer-version>
   </properties>
   <dependencies>
     <dependency>
@@ -34,6 +35,14 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+
+    <!--  JPA-streamer  -->
+    <dependency>
+      <groupId>com.speedment.jpastreamer</groupId>
+      <artifactId>jpastreamer-core</artifactId>
+      <version>${jpa-streamer-version}</version>
+    </dependency>
+
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>java-jwt</artifactId>
@@ -89,6 +98,25 @@
             </exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>
+                  ${project.build.directory}/generated-sources/annotations
+                </source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

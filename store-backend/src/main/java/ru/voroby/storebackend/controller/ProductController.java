@@ -1,5 +1,6 @@
 package ru.voroby.storebackend.controller;
 
+import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +11,6 @@ import ru.voroby.storebackend.repository.ProductDAO;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -22,18 +21,18 @@ public class ProductController extends BaseController {
 
   private ProductDAO productDAO;
 
-  public ProductController(ProductDAO productDAO) {
+  private final JPAStreamer jpaStreamer;
+
+  public ProductController(ProductDAO productDAO, JPAStreamer jpaStreamer) {
     this.productDAO = productDAO;
+    this.jpaStreamer = jpaStreamer;
   }
 
   @GetMapping
   public ResponseEntity<List<ProductDTO>> getAllProducts() {
-    final var products = StreamSupport
-      .stream(productDAO.findAll().spliterator(), false)
-      .collect(Collectors.toList());
-
     return ResponseEntity.ok()
-      .body(products.stream().map(ProductDTO::of).collect(Collectors.toList()));
+      .body(jpaStreamer.stream(Product.class).toList()
+        .stream().map(ProductDTO::of).toList());
   }
 
   @Transactional

@@ -46,9 +46,8 @@ public class OrderController extends BaseController {
   @GetMapping(produces = APPLICATION_JSON_VALUE)
   public ResponseEntity<List<OrderDTO>> getAll() {
     return ResponseEntity.ok()
-      .body(StreamSupport.stream(orderDAO.findAll().spliterator(), false)
-      .map(OrderDTO::of)
-      .collect(Collectors.toList()));
+      .body(orderDAO.findAll().stream()
+      .map(OrderDTO::of).toList());
   }
 
   @Transactional
